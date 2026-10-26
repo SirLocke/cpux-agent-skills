@@ -1,0 +1,19 @@
+---
+description: Conduct UX reviews, Persona Walkthroughs, 5-State UI checks, and ISO 9241-110:2020 usability fixes when creating or editing frontend components and templates.
+globs: ["**/*.html", "**/*.twig", "**/*.vue", "**/*.tsx", "**/*.jsx", "**/*.svelte", "**/*View.java", "docs/ux/**/*.md"]
+alwaysApply: false
+---
+
+# UX Review & Persona Walkthrough Rules (ISO 9241 / CPUX)
+
+When asked to review UX, improve usability, create/save personas, design a user flow, or build/refactor a UI component:
+
+1. **Persona Setup & Cognitive Walkthrough:** Check `docs/ux/personas.md` first to reuse existing project personas. Otherwise, define 1 Primary Persona (task-focused, context constraints like mobile/glare/time pressure) and 1 Edge-Case Persona (keyboard-only, screen-reader, or low-vision) and trace their step-by-step path through the component. When asked to save personas for reuse, write them to `docs/ux/personas.md`.
+2. **5-State Completeness Check:** Never ship Happy-Path-only UI. Verify and implement:
+   - `Empty State` (motivating explanation + primary CTA)
+   - `Loading State` (`aria-busy="true"`, disabled submit to prevent double-triggers, skeleton/spinner)
+   - `Error State` (preserve all valid user input! Never call `form.reset()` on error; provide inline field recovery via `aria-invalid="true"` and `aria-describedby`)
+   - `Partial / Overflow State` (long German compound words, 100+ items, missing optional data)
+   - `Success State` (clear confirmation + Undo option or explicit verb confirmation for destructive actions)
+3. **ISO 9241-110:2020 Principles:** Enforce *Aufgabenangemessenheit* (smart defaults, `autocomplete`, `inputmode`), *Selbstbeschreibungsfähigkeit* (persistent `<label>`, never placeholder-only), *Erwartungskonformität* (semantic `<button>` over `<div onClick>`, logical `Tab` order), *Steuerbarkeit* (back-navigation without data loss, `prefers-reduced-motion`), and *Robuste Verwendung* (forgiving input parsers that strip spaces in IBAN/phone automatically).
+4. **Problem vs. Solution Space:** When specifying User Needs (*Erfordernisse*) or Qualitative User Requirements (*Nutzungsanforderungen*), never mention concrete UI widgets ("dropdown", "modal").

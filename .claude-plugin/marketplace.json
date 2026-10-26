@@ -1,0 +1,21 @@
+{
+  "name": "cpux-agent-skills",
+  "owner": {
+    "name": "Nils Mahler"
+  },
+  "metadata": {
+    "description": "Task-driven UX review, Persona Walkthroughs (Cognitive Walkthrough), and ISO 9241 / UXQB (CPUX) UX engineering skills for AI coding agents.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "ux-review-walkthrough",
+      "description": "Conduct Persona-based Cognitive Walkthroughs, 5-State UI audits, ISO 9241-110:2020 code reviews, and widget-free UX requirements engineering.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/ux-review-walkthrough"
+      ]
+    }
+  ]
+}

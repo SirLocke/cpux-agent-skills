@@ -1,0 +1,20 @@
+{
+  "name": "cpux-agent-skills",
+  "version": "1.0.0",
+  "description": "Task-driven UX review, Persona Walkthrough, and ISO 9241 / UXQB (CPUX) engineering skills for AI coding agents.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "eval": "node scripts/run-evals.mjs"
+  },
+  "keywords": [
+    "agent-skills",
+    "uxqb",
+    "cpux",
+    "iso-9241",
+    "usability",
+    "accessibility",
+    "cursor-rules",
+    "claude-code"
+  ]
+}

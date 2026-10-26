@@ -1,0 +1,69 @@
+{
+  "skill_name": "ux-review-walkthrough",
+  "evals": [
+    {
+      "id": "eval-01-broken-code-audit",
+      "prompt": "Mach mal ein kurzes UX Review von unserem Vereins-Beitrittsformular und verbessere den Code:\n<form id=\"joinForm\" onsubmit=\"handleSubmit(event)\">\n  <input type=\"text\" placeholder=\"Vor- und Nachname\">\n  <input type=\"text\" placeholder=\"IBAN (ohne Leerzeichen!)\">\n  <div class=\"btn\" onclick=\"submitForm()\">Absenden</div>\n  <div id=\"err\" style=\"color:red;display:none\">Ungültige Eingabe!</div>\n</form>\n<script>\nfunction submitForm() {\n  const iban = document.querySelectorAll('input')[1].value;\n  if (iban.includes(' ') || iban.length !== 22) {\n    document.getElementById('joinForm').reset();\n    document.getElementById('err').style.display = 'block';\n  }\n}\n</script>",
+      "assertions": [
+        "Simuliert einen kurzen Persona-Walkthrough (inkl. Tastatur- oder Mobile-Nutzung) durch den Code.",
+        "Markiert document.getElementById('joinForm').reset() und das Verbot von Leerzeichen in der IBAN als Verstoß gegen 'Robuste Verwendung' (Use error robustness / ISO 9241-110:2020) und strippt Leerzeichen im Fix automatisch per Code.",
+        "Ersetzt <div class=\"btn\" onclick=...> durch einen echten <button type=\"submit\"> für Tastatur-Zugänglichkeit (Erwartungskonformität / Steuerbarkeit).",
+        "Ersetzt die reinen Placeholder durch persistente <label for=...>-Elemente und verknüpft spezifische Fehlermeldungen via aria-invalid und aria-describedby (Selbstbeschreibungsfähigkeit)."
+      ]
+    },
+    {
+      "id": "eval-02-feature-from-scratch",
+      "prompt": "Wir bauen eine Web-App für unseren Handwerksbetrieb. Die Monteure brauchen unterwegs auf der Baustelle eine Funktion, um schnell Material nachzubestellen, wenn im Lieferwagen etwas leer geht. Wie würdest du die UX dafür aufbauen?",
+      "assertions": [
+        "Beginnt mit der Analyse des Nutzungskontexts, einer konkreten Persona und einem Ist-Szenario (As-Is Scenario), bevor konkrete UI-Lösungen vorgeschlagen werden.",
+        "Trennt den Problemraum vom Lösungsraum: Der Abschnitt 'Erfordernisse (User Needs)' beschreibt nur das fachliche Bedürfnis des Nutzers und schreibt dort noch keine konkreten UI-Steuerelemente (wie Dropdowns, Modals oder Buttons) vor (im späteren Abschnitt 'Interaktionskonzept' dürfen und sollen natürlich konkrete UI-Elemente genannt werden).",
+        "Beinhaltet konkrete Nutzungsanforderungen (inkl. messbarer quantitativer Kriterien nach ISO 9241-11) sowie ein abschließendes Soll-Szenario / Interaktionskonzept, das auf die physischen Einschränkungen vor Ort eingeht."
+      ]
+    },
+    {
+      "id": "eval-03-missing-ui-states",
+      "prompt": "Kannst du die UX von dieser Komponenten-Ansicht prüfen und verbessern?\nexport function InvoiceList({ invoices }) {\n  return (\n    <ul>\n      {invoices.map(inv => <li key={inv.id}>{inv.title} - {inv.amount} €</li>)}\n    </ul>\n  );\n}",
+      "assertions": [
+        "Prüft die Komponente systematisch auf fehlende UI-States jenseits des Happy Paths (insbesondere Empty State, Loading State, Error State).",
+        "Begründet das Fehlen eines hilfreichen Empty States und Loading States mit den Prinzipien der ISO 9241-110:2020 (z. B. Selbstbeschreibungsfähigkeit, Benutzerbindung, Robuste Verwendung).",
+        "Liefert verbesserten Code, der Loading (inkl. aria-busy), Error (mit Retry-Möglichkeit) und einen handlungsorientierten Empty State abdeckt."
+      ]
+    },
+    {
+      "id": "eval-04-destructive-action-flow",
+      "prompt": "Verbessere die UX: In unserer Mitgliederverwaltung gibt es in jeder Tabellenzeile ein Mülltonnen-Icon. Wenn der Vereinsvorstand darauf klickt, wird das Mitglied sofort per DELETE-Request aus der Datenbank gelöscht.",
+      "assertions": [
+        "Stuft das sofortige Löschen ohne Schutzmechanismus als kritischen Verstoß gegen 'Robuste Verwendung' (Use error robustness) ein.",
+        "Schlägt als Lösung entweder ein Undo-Pattern (Soft-Delete mit zeitlich begrenztem Rückgängig-Toast) oder einen Bestätigungsdialog vor.",
+        "Achtet beim Bestätigungsdialog auf eindeutige, aktionsspezifische Button-Beschriftungen (z. B. 'Mitglied löschen' vs. 'Abbrechen') statt unklarer Labels wie 'Ja/Nein' oder 'OK'."
+      ]
+    },
+    {
+      "id": "eval-05-non-leading-test-task",
+      "prompt": "Ich will morgen mit 5 Leuten testen, ob unser neuer Abo-Bereich verständlich ist. Im Menü heißt der Punkt 'Mitgliedschaft verwalten' und dort gibt es den Button 'Pausieren'. Schreib mir mal zwei gute Testaufgaben für die Testpersonen.",
+      "assertions": [
+        "Die für die Testpersonen ausformulierten Aufgabentexte verraten NICHT den Klickpfad und enthalten nicht die wörtlichen UI-Begriffe 'Mitgliedschaft verwalten' oder 'Pausieren'.",
+        "Verpackt die Aufgaben in realistische Alltagsszenarien (z. B. längerer Auslandsaufenthalt / vorübergehende Unterbrechung) mit objektiv überprüfbarem Endzustand.",
+        "Erklärt für den Testleiter kurz das methodische Prinzip nicht-leitender Testaufgaben."
+      ]
+    },
+    {
+      "id": "eval-06-holdout-b2b-lab-touchscreen",
+      "prompt": "Wir entwickeln die Touchscreen-Oberfläche für eine medizinische Labor-Zentrifuge. Laboranten tragen Nitrilhandschuhe, stehen unter Zeitdruck und müssen oft mehrere Probenläufe hintereinander starten. Manchmal geben sie versehentlich 15.000 RPM statt 1.500 RPM ein, was die Blutproben zerstört. Wie sollten wir die UX für die Lauf-Konfiguration gestalten?",
+      "assertions": [
+        "Analysiert zuerst den Nutzungskontext (Laborumgebung, Handschuhbedienung, Sicherheitsrisiko bei Fehleingabe) und leitet daraus lösungsneutrale Erfordernisse und Nutzungsanforderungen ab.",
+        "Adressiert das 15.000 vs. 1.500 RPM Problem gezielt über das Prinzip 'Robuste Verwendung' (Use error robustness) und 'Aufgabenangemessenheit' (z. B. erprobte Programm-Presets für Blutproben statt freier Zifferneingabe, Plausibilitätsgrenzen/Warnung bei extremen Werten).",
+        "Berücksichtigt die physische Umgebung im Interaktionskonzept (große Touch-Targets für Nitrilhandschuhe, klare visuelle Status-Rückmeldung aus der Distanz)."
+      ]
+    },
+    {
+      "id": "eval-07-reusable-project-personas",
+      "prompt": "Wir starten ein neues Projekt für eine kommunale Bürgeramt-Terminbuchung (Web & Mobile). Erstelle bitte wiederverwendbare Projekt-Personas und den Nutzungskontext für unser Repo, damit unser Team sie bei künftigen UX-Reviews nutzen kann.",
+      "assertions": [
+        "Analysiert strukturiert den Nutzungskontext nach ISO 9241-11 (Benutzergruppen sowie physische, soziale und technische Umgebung) und bereitet das Artefakt für die Ablage unter docs/ux/personas.md auf.",
+        "Definiert sowohl eine realistische Primary Context Persona (mit Kernzielen, Nutzungshäufigkeit, situativen Einschränkungen und typischen Schmerzpunkten) als auch eine dedizierte Accessibility / Edge-Case Persona.",
+        "Spezifiziert bei der Accessibility-Persona konkrete assistierende Technologien bzw. Barrieren (z. B. reine Tastaturbedienung, Screenreader, 200 % Zoom, Farbfehlsichtigkeit oder reduzierte Bewegung) sowie projektweite Domänen- und Formatierungsregeln (z. B. fehlertolerante Eingaben)."
+      ]
+    }
+  ]
+}

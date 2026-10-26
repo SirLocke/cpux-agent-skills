@@ -1,0 +1,23 @@
+{
+  "name": "ux-review-walkthrough",
+  "version": "1.0.0",
+  "description": "Task-driven UX reviews, Persona Cognitive Walkthroughs, 5-State UI audits, and ISO 9241 / UXQB (CPUX) UX engineering for AI coding agents.",
+  "author": {
+    "name": "Nils Mahler",
+    "url": "https://github.com/SirLocke"
+  },
+  "homepage": "https://github.com/SirLocke/cpux-agent-skills",
+  "repository": "https://github.com/SirLocke/cpux-agent-skills",
+  "license": "Apache-2.0",
+  "keywords": [
+    "ux",
+    "usability",
+    "accessibility",
+    "iso-9241",
+    "cpux",
+    "uxqb",
+    "personas",
+    "cognitive-walkthrough",
+    "wcag"
+  ]
+}
